@@ -28,17 +28,26 @@ class SoreAPI {
     action: 'get_ids' | 'get_items' | 'filter' | 'get_fields';
     params?: object;
   }): Promise<T> {
-    const response = fetch(this.baseURL, {
-      method: 'POST',
-      headers: {
-        'X-Auth': this.xAuth,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    });
+    try {
+      const response = await fetch(this.baseURL, {
+        method: 'POST',
+        headers: {
+          'X-Auth': this.xAuth,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-    const data = response.then(res => res.json()) as Promise<{ result: T }>;
-    return (await data).result;
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = response.json() as Promise<{ result: T }>;
+      return (await data).result;
+    } catch (error) {
+      console.error('Error in fetcher:', error);
+      throw error;
+    }
   }
 
   /**
