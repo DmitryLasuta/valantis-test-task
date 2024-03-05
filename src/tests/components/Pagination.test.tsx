@@ -11,6 +11,7 @@ describe('Pagination', () => {
     );
 
     expect(baseElement).toBeInTheDocument();
+    expect(baseElement).toMatchSnapshot();
     expect(getByLabelText('Go to previous page')).toBeDisabled();
     expect(getByLabelText('Go to next page')).not.toBeDisabled();
   });
