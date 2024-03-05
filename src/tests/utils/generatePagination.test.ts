@@ -32,8 +32,8 @@ describe('generatePagination', () => {
   });
 
   test('should return correct pagination for other cases', () => {
-    const currentPage = Math.floor(Math.random() * 10) + 1;
-    const totalPages = currentPage + 20;
+    const currentPage = Math.floor(Math.random() * 10) + 10;
+    const totalPages = currentPage + 10;
     expect(generatePagination(currentPage, totalPages)).toEqual([
       1,
       '...',
