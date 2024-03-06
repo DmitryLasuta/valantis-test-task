@@ -49,7 +49,12 @@ class SoreAPI {
       throw error;
     }
   }
-
+  /**
+   * The method returns an ordered list of identifiers of all available products
+   *
+   * @returns {Promise<string[]>} An array of identifiers
+   */
+  public async getIdentifiers(): Promise<string[]>;
   /**
    * Used to filter.
    * Returns an ordered list of product IDs matching the specified value.
@@ -65,28 +70,26 @@ class SoreAPI {
   /**
    * The method returns an ordered list of product identifiers.
    * Detailed information about the product can be requested using the selected identifiers.
-   * By default, it returns identifiers of all available products.
    *
    * Parameters:
-   * @param {number} limit The number of identifiers.
-   * @param {number} offset  Offset relative to the beginning of the list.
+   * @param {number} params.limit The number of identifiers.
+   * @param {number} params.offset  Offset relative to the beginning of the list.
+   *
    * @returns {Promise<string[]>} An array of identifiers
    */
-  public async getIdentifiers(limit?: number, offset?: number): Promise<string[]>;
-  public async getIdentifiers(
-    paramsOrLimit?: Partial<ProductExcludingId> | number,
-    offset?: number
-  ): Promise<string[]> {
-    const params = typeof paramsOrLimit === 'number' ? { limit: paramsOrLimit, offset } : paramsOrLimit;
-
+  public async getIdentifiers(params: { limit: number; offset: number }): Promise<string[]>;
+  public async getIdentifiers(params?: unknown): Promise<string[]> {
     if (!params) {
-      return this.fetcher({
+      const identifiers = await this.fetcher<string[]>({
         action: 'get_ids',
-        params,
       });
+      const uniqueIdentifiers = identifiers.filter((id, index, self) => {
+        return self.indexOf(id) === index;
+      });
+      return uniqueIdentifiers;
     }
 
-    if ('limit' in params && 'offset' in params) {
+    if (typeof params === 'object' && 'limit' in params && 'offset' in params) {
       const identifiers = await this.fetcher<string[]>({
         action: 'get_ids',
         params,
