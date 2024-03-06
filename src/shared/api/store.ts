@@ -49,11 +49,6 @@ class SoreAPI {
       throw error;
     }
   }
-  /**
-   * The method returns an ordered list of identifiers of all available products
-   *
-   * @returns {Promise<string[]>} An array of identifiers
-   */
   public async getIdentifiers(): Promise<string[]>;
   /**
    * Used to filter.

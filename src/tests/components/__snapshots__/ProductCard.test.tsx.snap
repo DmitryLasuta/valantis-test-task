@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProductCard > should render correctly with initial props 1`] = `
+<body>
+  <div>
+    <article
+      class="_product-card_a15228"
+    >
+      <header>
+        <h3
+          class="_product-card__name_a15228"
+        >
+          test product
+           | ID: 
+          1
+        </h3>
+        <p
+          class="_product-card__brand_a15228"
+        >
+          Brand: 
+          test brand
+        </p>
+      </header>
+      <p
+        class="_product-card__price_a15228"
+      >
+        Price: $
+        1000
+      </p>
+    </article>
+  </div>
+</body>
+`;

@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Pagination > should render correctly with initial props 1`] = `
+<body>
+  <div>
+    <nav
+      aria-label="Pagination"
+      class="_pagination_b64421"
+    >
+      <button
+        aria-label="Go to previous page"
+        class="_pagination__button_b64421"
+        disabled=""
+        type="button"
+      >
+        &lt;
+      </button>
+      <ul
+        class="_pagination__pages-list_b64421"
+      >
+        <li>
+          <button
+            aria-label="Go to page 1"
+            class="_pagination__button_b64421"
+            disabled=""
+            type="button"
+          >
+            1
+          </button>
+        </li>
+        <li>
+          <button
+            aria-label="Go to page 2"
+            class="_pagination__button_b64421"
+            type="button"
+          >
+            2
+          </button>
+        </li>
+        <li>
+          <button
+            aria-label="Go to page 3"
+            class="_pagination__button_b64421"
+            type="button"
+          >
+            3
+          </button>
+        </li>
+        <li>
+          <button
+            aria-label="Go to page 4"
+            class="_pagination__button_b64421"
+            type="button"
+          >
+            4
+          </button>
+        </li>
+        <li>
+          <button
+            aria-label="Go to page 5"
+            class="_pagination__button_b64421"
+            type="button"
+          >
+            5
+          </button>
+        </li>
+      </ul>
+      <button
+        aria-label="Go to next page"
+        class="_pagination__button_b64421"
+        type="button"
+      >
+        &gt;
+      </button>
+      <p>
+        Page 
+        1
+         of 
+        5
+      </p>
+    </nav>
+  </div>
+</body>
+`;
