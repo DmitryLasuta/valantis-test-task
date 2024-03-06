@@ -49,6 +49,11 @@ class SoreAPI {
       throw error;
     }
   }
+  /**
+   * The method returns an ordered list of product identifiers.
+   *
+   * @returns {Promise<string[]>} Ordered list of product identifiers.
+   */
   public async getIdentifiers(): Promise<string[]>;
   /**
    * Used to filter.
@@ -78,10 +83,7 @@ class SoreAPI {
       const identifiers = await this.fetcher<string[]>({
         action: 'get_ids',
       });
-      const uniqueIdentifiers = identifiers.filter((id, index, self) => {
-        return self.indexOf(id) === index;
-      });
-      return uniqueIdentifiers;
+      return [...new Set(identifiers)];
     }
 
     if (typeof params === 'object' && 'limit' in params && 'offset' in params) {
@@ -89,10 +91,7 @@ class SoreAPI {
         action: 'get_ids',
         params,
       });
-      const uniqueIdentifiers = identifiers.filter((id, index, self) => {
-        return self.indexOf(id) === index;
-      });
-      return uniqueIdentifiers;
+      return [...new Set(identifiers)];
     }
 
     return this.fetcher({
@@ -111,12 +110,28 @@ class SoreAPI {
    * @returns {Promise<Product[] | null>} If an array of identifiers is passed, returns an array of products with all characteristics
    */
   public async getProducts(identifiers: string[]): Promise<Product[] | null> {
-    return this.fetcher({
+    const products = await this.fetcher<Product[]>({
       action: 'get_items',
       params: {
         ids: identifiers,
       },
     });
+
+    if (!products) {
+      return null;
+    }
+
+    const uniqueProducts: Product[] = [];
+    const seenIds = new Map();
+
+    for (const product of products) {
+      if (!seenIds.has(product.id)) {
+        seenIds.set(product.id, true);
+        uniqueProducts.push(product);
+      }
+    }
+
+    return uniqueProducts;
   }
 
   /**
