@@ -51,6 +51,18 @@ class SoreAPI {
   }
 
   /**
+   * Used to filter.
+   * Returns an ordered list of product IDs matching the specified value.
+   *
+   * Any field returned by the `getFields` method without parameters can be used as a parameter.
+   * The data type corresponding to the field must be used as the value.
+   * For the product field it will be checked if the parameter is a string.
+   * For other fields, strict matching is checked.
+   * @param {Partial<ProductExcludingId>} params Parameters for filtering.
+   * @returns {Promise<string[]>} List of product identifiers that satisfy the filtering conditions.
+   */
+  public async getIdentifiers(params: Partial<ProductExcludingId>): Promise<string[]>;
+  /**
    * The method returns an ordered list of product identifiers.
    * Detailed information about the product can be requested using the selected identifiers.
    * By default, it returns identifiers of all available products.
@@ -60,17 +72,26 @@ class SoreAPI {
    * @param {number} offset  Offset relative to the beginning of the list.
    * @returns {Promise<string[]>} An array of identifiers
    */
-  public async getIdentifiers(limit: number, offset: number): Promise<string[]> {
-    const identifiers = await this.fetcher<string[]>({
-      action: 'get_ids',
-      params: { limit, offset },
-    });
+  public async getIdentifiers(limit?: number, offset?: number): Promise<string[]>;
+  public async getIdentifiers(
+    paramsOrLimit?: Partial<ProductExcludingId> | number,
+    offset?: number
+  ): Promise<string[]> {
+    if (paramsOrLimit && offset) {
+      const identifiers = await this.fetcher<string[]>({
+        action: 'get_ids',
+        params: { paramsOrLimit, offset },
+      });
+      const uniqueIdentifiers = identifiers.filter((id, index, self) => {
+        return self.indexOf(id) === index;
+      });
+      return uniqueIdentifiers;
+    }
 
-    const uniqueIdentifiers = identifiers.filter((id, index, self) => {
-      return self.indexOf(id) === index;
+    return this.fetcher({
+      action: 'filter',
+      params: { paramsOrLimit },
     });
-
-    return uniqueIdentifiers;
   }
 
   /**
@@ -108,24 +129,6 @@ class SoreAPI {
   }): Promise<Array<number | string | null>> {
     return this.fetcher({
       action: 'get_fields',
-      params,
-    });
-  }
-
-  /**
-   * Used to filter.
-   * Returns an ordered list of product IDs matching the specified value.
-   *
-   * Any field returned by the `getFields` method without parameters can be used as a parameter.
-   * The data type corresponding to the field must be used as the value.
-   * For the product field it will be checked if the parameter is a string.
-   * For other fields, strict matching is checked.
-   * @param {Partial<ProductExcludingId>} params Parameters for filtering.
-   * @returns {Promise<string[]>} List of product identifiers that satisfy the filtering conditions.
-   */
-  public async getFilteredProductIdentifiers(params: Partial<ProductExcludingId>): Promise<string[]> {
-    return this.fetcher({
-      action: 'filter',
       params,
     });
   }
