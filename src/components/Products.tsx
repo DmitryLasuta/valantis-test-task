@@ -12,6 +12,7 @@ const Products = ({ identifiers }: { identifiers: string[] }) => {
   } = useQuery({
     queryKey: [QUERY_KEYS.PRODUCTS, identifiers],
     queryFn: () => storeAPI.getProducts(identifiers),
+    staleTime: 1000 * 60 * 5,
   });
 
   if (!products || isPending) return <div>Loading...</div>;

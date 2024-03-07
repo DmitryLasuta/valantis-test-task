@@ -135,7 +135,12 @@ class SoreAPI {
   }
 
   /**
-   * The method without parameters returns an ordered list of existing product fields.
+   * The method without parameters returns an ordered list of existing product fields..
+   *
+   * @returns {Promise<string[]>}
+   */
+  public getFields(): Promise<string[]>;
+  /**
    * When given the field parameter, it returns an ordered list of the values of the given product field.
    *
    * Parameters:
@@ -148,7 +153,13 @@ class SoreAPI {
     field: ProductFieldNames;
     offset?: number;
     limit?: number;
-  }): Promise<Array<number | string | null>> {
+  }): Promise<Array<number | string | null>>;
+  public getFields(params?: unknown): Promise<unknown> {
+    if (!params) {
+      return this.fetcher({
+        action: 'get_fields',
+      });
+    }
     return this.fetcher({
       action: 'get_fields',
       params,
