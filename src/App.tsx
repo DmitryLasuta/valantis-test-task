@@ -1,28 +1,51 @@
-import { Pagination, Products } from './components';
+import { Filtering, Pagination, Products } from './components';
+import { useCallback, useRef, useState } from 'react';
 
 import { ITEMS_PER_PAGE } from './shared/constants';
 import { QUERY_KEYS } from './shared/constants/queryKeys';
 import { storeAPI } from './shared/api/store';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: identifiers, isPending } = useQuery({
+  const filters = useRef({
+    filter: 'none',
+    value: '',
+  });
+  const {
+    data: identifiers,
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: [QUERY_KEYS.PRODUCT_IDENTIFIERS],
-    queryFn: () => storeAPI.getIdentifiers(),
+    queryFn: () => {
+      const { filter, value } = filters.current;
+      if (filter === 'none') {
+        return storeAPI.getIdentifiers();
+      }
+      return storeAPI.getIdentifiers({
+        [filter]: filter === 'price' ? Number(value) : value,
+      });
+    },
     staleTime: Infinity,
   });
 
-  if (isPending || !identifiers) return <div>Loading...</div>;
+  const haleFilters = (params: { filter: string; value: string }) => {
+    filters.current = params;
+    setCurrentPage(1);
+    refetch();
+  };
 
-  const totalPages = Math.ceil(identifiers.length / ITEMS_PER_PAGE);
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
+  if (isPending || !identifiers) return <div>Loading...</div>;
+  const totalPages = Math.ceil(identifiers.length / ITEMS_PER_PAGE);
+
   return (
     <div>
+      <Filtering setFilters={haleFilters} />
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       <Products identifiers={identifiers.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)} />
     </div>
