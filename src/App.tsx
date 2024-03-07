@@ -1,5 +1,5 @@
 import { Filtering, Pagination, Products } from './components';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { ITEMS_PER_PAGE } from './shared/constants';
 import { QUERY_KEYS } from './shared/constants/queryKeys';
