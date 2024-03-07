@@ -1,4 +1,4 @@
 export * from './pagination';
-export * from './productCard';
+export * from './ui/productCard';
 export * from './Products';
 export * from './filtering';

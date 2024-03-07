@@ -11,10 +11,8 @@
 }
 
 .pagination__button {
-  padding: 0.5rem;
+  padding: 0.3rem 0.6rem;
   border-radius: 0.25rem;
-  height: 2rem;
-  width: 2rem;
   background-color: #64748b;
   color: #fff;
   border: 1px solid #222;

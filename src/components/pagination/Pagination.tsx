@@ -19,7 +19,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         disabled={!canGoPrev}
         onClick={() => onPageChange(currentPage - 1)}
         type="button"
-        aria-label="Go to previous page"
+        aria-label="Перейти на предыдущую страницу"
       >
         {'<'}
       </button>
@@ -31,7 +31,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
               disabled={page === currentPage || typeof page === 'string'}
               onClick={() => onPageChange(Number(page))}
               type="button"
-              aria-label={`Go to page ${page}`}
+              aria-label={`Перейти на страницу ${page}`}
             >
               {page}
             </button>
@@ -43,7 +43,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         disabled={!canGoNext}
         onClick={() => onPageChange(currentPage + 1)}
         type="button"
-        aria-label="Go to next page"
+        aria-label="Перейти на следующую страницу"
       >
         {'>'}
       </button>

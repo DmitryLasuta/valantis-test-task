@@ -1,5 +1,5 @@
 import { Grid } from './ui';
-import { ProductCard } from './productCard';
+import { ProductCard } from './ui/productCard';
 import { QUERY_KEYS } from '@/shared/constants';
 import { storeAPI } from '@/shared/api/store';
 import { useQuery } from '@tanstack/react-query';
