@@ -1,0 +1,17 @@
+.header {
+  background-color: var(--background-color-dark);
+  padding: 1rem;
+}
+
+.header__title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.main {
+  padding: 1rem 15px;
+  max-width: 1430px;
+  margin: auto;
+  min-height: 100vh;
+}
