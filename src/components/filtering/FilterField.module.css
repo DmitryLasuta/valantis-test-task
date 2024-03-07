@@ -1,0 +1,11 @@
+.filtering__field-label {
+  text-transform: capitalize;
+}
+
+.filtering__input {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ddd;
+  width: 100%;
+  flex: 1;
+}

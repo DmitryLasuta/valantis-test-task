@@ -4,3 +4,6 @@ export interface Product {
   price?: number;
   product?: string;
 }
+
+export type ProductFieldNames = keyof Product;
+export type ProductExcludingId = Omit<Product, 'id'>;

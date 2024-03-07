@@ -1,8 +1,6 @@
-import type { Product } from '@/types';
-import md5 from 'md5';
+import type { Product, ProductExcludingId, ProductFieldNames } from '@/types';
 
-type ProductExcludingId = Omit<Product, 'id'>;
-type ProductFieldNames = keyof ProductExcludingId;
+import md5 from 'md5';
 
 class SoreAPI {
   public baseURL = 'https://api.valantis.store:41000';

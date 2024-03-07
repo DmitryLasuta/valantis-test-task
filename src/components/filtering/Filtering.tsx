@@ -1,103 +1,52 @@
-import { useRef, useState } from 'react';
+import { Children, cloneElement, isValidElement, useState } from 'react';
 
-import { storeAPI } from '@/shared/api/store';
-import styles from './styles.module.css';
-import { useMutation } from '@tanstack/react-query';
+import type { ProductExcludingId } from '@/types';
+import styles from './Filtering.module.css';
 
 type FilteringProps = {
-  setFilters: ({ filter, value }: { filter: string; value: string }) => void;
+  children: React.ReactNode;
+  setFilters: (params: Partial<ProductExcludingId>) => void;
 };
 
-const Filtering = ({ setFilters }: FilteringProps) => {
-  const [fields, setFields] = useState<string[]>([]);
-  const [selectedField, setSelectedField] = useState<string>('none');
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const wasFiltered = useRef(false);
-
-  const mutation = useMutation({
-    mutationFn: () => storeAPI.getFields(),
-    onSuccess: data => {
-      setFields(data);
-    },
-  });
-
-  const handleSelectClick = () => {
-    if (fields.length === 0) {
-      mutation.mutate();
-    }
-  };
-
-  const handleFieldChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedField(target.value);
-    setSearchTerm('');
-  };
+const Filtering = ({ setFilters, children }: FilteringProps) => {
+  const [searchParams, setSearchParams] = useState<Partial<ProductExcludingId>>({});
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setFilters({ filter: selectedField, value: searchTerm });
-    wasFiltered.current = true;
+    setFilters({
+      ...searchParams,
+      price: Number(searchParams.price) ? Number(searchParams.price) : undefined,
+    });
   };
-
-  const handleReset = () => {
-    setSearchTerm('');
-    setSelectedField('none');
-    setFilters({ filter: 'none', value: '' });
-    wasFiltered.current = false;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams({ ...searchParams, [event.target.name]: event.target.value });
   };
 
   return (
-    <>
-      <form className={styles.filtering} onSubmit={handleSubmit} onReset={handleReset}>
-        <div className={styles.filtering__box}>
-          <div className={styles.filtering__field}>
-            <label className={styles.filtering__label} htmlFor="fields">
-              Фильтры
-            </label>
-            <select
-              className={styles.filtering__select}
-              id="fields"
-              onClick={handleSelectClick}
-              onChange={handleFieldChange}
-              value={selectedField}
-            >
-              <option value="none">Без фильтров</option>
-              {fields.length > 0 ? (
-                fields.map(field => (
-                  <option key={field} value={field}>
-                    {field}
-                  </option>
-                ))
-              ) : (
-                <option value="none">Загрузка...</option>
-              )}
-            </select>
-          </div>
-          <input
-            className={styles.filtering__input}
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            type={selectedField !== 'price' ? 'text' : 'number'}
-            min={selectedField === 'price' ? 0 : undefined}
-            placeholder="Поиск"
-            disabled={selectedField === 'none'}
-            required
-            role={selectedField !== 'none' ? 'search' : undefined}
-            aria-label="Поиск"
-          />
-        </div>
-        <div className={styles.filtering__buttons}>
-          <button className={styles.filtering__button} type="submit">
-            Поиск
-          </button>
-          <button className={styles.filtering__button} type="reset">
-            Сброс
-          </button>
-        </div>
-      </form>
-      <p className={styles.filtering__info}>
-        {wasFiltered.current ? `Активные фильтр: ${selectedField} - ${searchTerm}` : 'Нет активных фильтров'}
-      </p>
-    </>
+    <form className={styles.filtering} onSubmit={handleSubmit}>
+      <div className={styles.filtering__box}>
+        <fieldset className={styles.filtering__fieldset}>
+          <legend className={styles['filtering__fieldset-legend']}>Фильтры</legend>
+          {Children.map(children, child =>
+            isValidElement(child)
+              ? cloneElement(child, {
+                  ...child.props,
+                  value: searchParams[child.props.value as keyof ProductExcludingId],
+                  onChange: handleChange,
+                })
+              : null
+          )}
+        </fieldset>
+      </div>
+      <div className={styles.filtering__buttons}>
+        <button className={styles.filtering__button} type="submit">
+          Поиск
+        </button>
+        <button className={styles.filtering__button} type="reset">
+          Сброс
+        </button>
+      </div>
+    </form>
   );
 };
 

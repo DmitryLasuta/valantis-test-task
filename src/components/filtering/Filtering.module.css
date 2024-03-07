@@ -2,36 +2,14 @@
   max-width: 700px;
   margin: auto;
   padding: 1rem;
+  color: var(--text-color-dark);
 }
 
 .filtering__box {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.filtering__label {
-  margin-right: 0.5rem;
-  color: var(--text-color-dark);
-  font-weight: 700;
-}
-
-.filtering__select {
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.6rem;
-  cursor: pointer;
-}
-
-.filtering__input {
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.25rem;
   flex: 1;
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 }
 
 .filtering__buttons {
@@ -63,8 +41,11 @@
   }
 }
 
-.filtering__info {
-  margin: 1rem 0;
-  color: var(--text-color-dark);
-  text-align: center;
+.filtering__fieldset {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  padding: 0.5rem;
 }
