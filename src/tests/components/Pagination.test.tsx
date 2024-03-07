@@ -12,15 +12,15 @@ describe('Pagination', () => {
 
     expect(baseElement).toBeInTheDocument();
     expect(baseElement).toMatchSnapshot();
-    expect(getByLabelText('Go to previous page')).toBeDisabled();
-    expect(getByLabelText('Go to next page')).not.toBeDisabled();
+    expect(getByLabelText('Перейти на предыдущую страницу')).toBeDisabled();
+    expect(getByLabelText('Перейти на следующую страницу')).not.toBeDisabled();
   });
 
   test('should call onPageChange with the correct page when next button is clicked', () => {
     const onPageChange = vi.fn();
     const { getByLabelText } = render(<Pagination currentPage={1} totalPages={5} onPageChange={onPageChange} />);
 
-    fireEvent.click(getByLabelText('Go to next page'));
+    fireEvent.click(getByLabelText('Перейти на следующую страницу'));
     expect(onPageChange).toHaveBeenCalledWith(2);
   });
 
@@ -28,7 +28,7 @@ describe('Pagination', () => {
     const onPageChange = vi.fn();
     const { getByLabelText } = render(<Pagination currentPage={1} totalPages={5} onPageChange={onPageChange} />);
 
-    fireEvent.click(getByLabelText('Go to page 3'));
+    fireEvent.click(getByLabelText('Перейти на страницу 3'));
     expect(onPageChange).toHaveBeenCalledWith(3);
   });
 
@@ -36,21 +36,21 @@ describe('Pagination', () => {
     const onPageChange = vi.fn();
     const { getByLabelText } = render(<Pagination currentPage={5} totalPages={5} onPageChange={onPageChange} />);
 
-    expect(getByLabelText('Go to next page')).toBeDisabled();
+    expect(getByLabelText('Перейти на следующую страницу')).toBeDisabled();
   });
 
   test('should disable previous button when currentPage is equal to 1', () => {
     const onPageChange = vi.fn();
     const { getByLabelText } = render(<Pagination currentPage={1} totalPages={5} onPageChange={onPageChange} />);
 
-    expect(getByLabelText('Go to previous page')).toBeDisabled();
+    expect(getByLabelText('Перейти на предыдущую страницу')).toBeDisabled();
   });
 
   test('should call onPageChange with the correct page when previous button is clicked', () => {
     const onPageChange = vi.fn();
     const { getByLabelText } = render(<Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />);
 
-    fireEvent.click(getByLabelText('Go to previous page'));
+    fireEvent.click(getByLabelText('Перейти на предыдущую страницу'));
     expect(onPageChange).toHaveBeenCalledWith(1);
   });
 });
