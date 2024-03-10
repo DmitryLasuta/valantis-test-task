@@ -8,7 +8,7 @@ exports[`Pagination > should render correctly with initial props 1`] = `
       class="_pagination_b64421"
     >
       <button
-        aria-label="Go to previous page"
+        aria-label="Перейти на предыдущую страницу"
         class="_pagination__button_b64421"
         disabled=""
         type="button"
@@ -20,7 +20,7 @@ exports[`Pagination > should render correctly with initial props 1`] = `
       >
         <li>
           <button
-            aria-label="Go to page 1"
+            aria-label="Перейти на страницу 1"
             class="_pagination__button_b64421"
             disabled=""
             type="button"
@@ -30,7 +30,7 @@ exports[`Pagination > should render correctly with initial props 1`] = `
         </li>
         <li>
           <button
-            aria-label="Go to page 2"
+            aria-label="Перейти на страницу 2"
             class="_pagination__button_b64421"
             type="button"
           >
@@ -39,7 +39,7 @@ exports[`Pagination > should render correctly with initial props 1`] = `
         </li>
         <li>
           <button
-            aria-label="Go to page 3"
+            aria-label="Перейти на страницу 3"
             class="_pagination__button_b64421"
             type="button"
           >
@@ -48,7 +48,7 @@ exports[`Pagination > should render correctly with initial props 1`] = `
         </li>
         <li>
           <button
-            aria-label="Go to page 4"
+            aria-label="Перейти на страницу 4"
             class="_pagination__button_b64421"
             type="button"
           >
@@ -57,7 +57,7 @@ exports[`Pagination > should render correctly with initial props 1`] = `
         </li>
         <li>
           <button
-            aria-label="Go to page 5"
+            aria-label="Перейти на страницу 5"
             class="_pagination__button_b64421"
             type="button"
           >
@@ -66,7 +66,7 @@ exports[`Pagination > should render correctly with initial props 1`] = `
         </li>
       </ul>
       <button
-        aria-label="Go to next page"
+        aria-label="Перейти на следующую страницу"
         class="_pagination__button_b64421"
         type="button"
       >

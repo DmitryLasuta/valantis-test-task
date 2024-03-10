@@ -4,27 +4,25 @@ exports[`ProductCard > should render correctly with initial props 1`] = `
 <body>
   <div>
     <article
-      class="_product-card_a15228"
+      class="_product-card_3fb99f"
     >
       <header>
         <h3
-          class="_product-card__name_a15228"
+          class="_product-card__name_3fb99f"
         >
           test product
-           | ID: 
-          1
         </h3>
         <p
-          class="_product-card__brand_a15228"
+          class="_product-card__brand_3fb99f"
         >
-          Brand: 
+          Бренд: 
           test brand
         </p>
       </header>
       <p
-        class="_product-card__price_a15228"
+        class="_product-card__price_3fb99f"
       >
-        Price: $
+        Цена: 
         1000
       </p>
     </article>
